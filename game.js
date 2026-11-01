@@ -64,3 +64,5 @@ function startFind(){const pool=LET.split('').sort(()=>Math.random()-.5).slice(0
   b.onclick=()=>{if(L===target){b.classList.add('yay');say(rnd(PRAISE)+' That\'s '+L+'! '+SND[L]);cheer();star();if(stars%5===0)confetti();setTimeout(()=>mode==='find'&&startFind(),2200)}
    else{b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);say('That\'s '+L+'. Find the '+target+'!')}};$('#choices').appendChild(b)});
  setTimeout(()=>say('Tap the '+target+'!'),300)}
+// ?mode=pop|build|find opens a game straight away (handy for links)
+{const m=new URLSearchParams(location.search).get('mode');if(['pop','build','find'].includes(m)){$('#start').remove();show(m)}}
