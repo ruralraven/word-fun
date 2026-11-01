@@ -27,7 +27,7 @@ body{background:linear-gradient(#7ec8ff,#bfe8ff 60%,#9be37a 60%,#6cc94f);color:#
 .slot{border:6px dashed #fff;background:#fff5;color:#fff}.slot.full{border-style:solid;background:#fff;color:#ff5fa2}
 .tile{background:#fff;color:#3a7bd5;box-shadow:0 7px 0 #0003;cursor:grab;touch-action:none;position:relative;z-index:2}
 .tile.drag{z-index:50;transform:scale(1.15)}.tile.used{visibility:hidden}
-.tile.hint{animation:wig .6s 3}@keyframes wig{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.tile.hint{animation:wig .6s 3}.tile.hint2{animation:wig .8s 1}.slot.ghost{color:#fff9}@keyframes wig{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
 #ask{text-align:center;font-size:clamp(60px,14vh,110px);margin-top:3vh;cursor:pointer;color:#fff;font-weight:900;text-shadow:0 6px 0 #3a7bd5}
 #choices{display:flex;justify-content:center;gap:4vw;flex-wrap:wrap;margin-top:4vh;padding:0 10px}
 .choice{width:min(40vw,170px);height:min(40vw,170px);border:none;border-radius:36px;font-size:min(24vw,110px);font-weight:900;color:#fff;box-shadow:0 9px 0 #0003;cursor:pointer;text-shadow:0 4px 0 #0003}
