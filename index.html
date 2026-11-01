@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Word Fun">
+<meta name="theme-color" content="#7ec8ff"><link rel="manifest" href="manifest.webmanifest"><title>Word Fun!</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+html,body{margin:0;height:100%;overflow:hidden;font-family:"Arial Rounded MT Bold","Comic Sans MS",system-ui,sans-serif;touch-action:none}
+body{background:linear-gradient(#7ec8ff,#bfe8ff 60%,#9be37a 60%,#6cc94f);color:#333}
+#top{position:fixed;top:0;left:0;right:0;height:70px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;z-index:5}
+.btn{border:none;border-radius:22px;font-size:34px;width:60px;height:60px;background:#fff;box-shadow:0 5px 0 #0002;cursor:pointer}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #0002}
+#stars{font-size:30px;background:#fff;border-radius:30px;padding:8px 18px;box-shadow:0 5px 0 #0002;font-weight:bold;color:#f5a400}
+.screen{position:fixed;inset:70px 0 0 0;display:none}.screen.on{display:block}
+#menu.on{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.title{font-size:clamp(40px,10vw,80px);font-weight:900;color:#fff;text-shadow:0 5px 0 #ff5fa2,0 9px 0 #0002;margin:0}
+.mode{width:min(85vw,420px);height:min(20vh,140px);border:none;border-radius:40px;font-size:clamp(50px,12vh,80px);box-shadow:0 9px 0 #0003;cursor:pointer;animation:bob 2s ease-in-out infinite}
+.mode:active{transform:scale(.95)}
+.m1{background:#ff6b9a}.m2{background:#ffd23f;animation-delay:.3s}.m3{background:#5ee08a;animation-delay:.6s}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.balloon{position:absolute;width:110px;height:135px;border-radius:50% 50% 48% 48%;display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:900;color:#fff;text-shadow:0 3px 0 #0003;cursor:pointer;box-shadow:inset -12px -12px 0 #0002}
+.balloon:after{content:"";position:absolute;bottom:-38px;left:54px;width:2px;height:38px;background:#fff8}
+.pop{animation:pop .35s forwards}@keyframes pop{to{transform:scale(1.8);opacity:0}}
+#bigl{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);font-size:200px;font-weight:900;color:#fff;text-shadow:0 8px 0 #ff5fa2;pointer-events:none;opacity:0;transition:opacity .3s}
+#pic{font-size:clamp(90px,22vh,170px);text-align:center;margin-top:2vh;cursor:pointer}
+#slots,#tiles{display:flex;justify-content:center;gap:14px;margin:2vh 0;flex-wrap:wrap}
+.slot,.tile{width:min(26vw,110px);height:min(26vw,110px);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:min(16vw,70px);font-weight:900}
+.slot{border:6px dashed #fff;background:#fff5;color:#fff}.slot.full{border-style:solid;background:#fff;color:#ff5fa2}
+.tile{background:#fff;color:#3a7bd5;box-shadow:0 7px 0 #0003;cursor:grab;touch-action:none;position:relative;z-index:2}
+.tile.drag{z-index:50;transform:scale(1.15)}.tile.used{visibility:hidden}
+.tile.hint{animation:wig .6s 3}@keyframes wig{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+#ask{text-align:center;font-size:clamp(60px,14vh,110px);margin-top:3vh;cursor:pointer;color:#fff;font-weight:900;text-shadow:0 6px 0 #3a7bd5}
+#choices{display:flex;justify-content:center;gap:4vw;flex-wrap:wrap;margin-top:4vh;padding:0 10px}
+.choice{width:min(40vw,170px);height:min(40vw,170px);border:none;border-radius:36px;font-size:min(24vw,110px);font-weight:900;color:#fff;box-shadow:0 9px 0 #0003;cursor:pointer;text-shadow:0 4px 0 #0003}
+.shake{animation:wig .4s}.yay{animation:pop2 .5s}@keyframes pop2{50%{transform:scale(1.25)}}
+#cheer{position:fixed;left:50%;top:45%;transform:translate(-50%,-50%) scale(0);font-size:120px;z-index:60;pointer-events:none;transition:transform .3s}
+#cheer.on{transform:translate(-50%,-50%) scale(1)}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:55}
+#start{position:fixed;inset:0;z-index:100;background:#7ec8ff;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#start button{font-size:90px;width:220px;height:220px;border-radius:50%;border:none;background:#ffd23f;box-shadow:0 12px 0 #0003;animation:bob 1.5s infinite}
+</style></head><body>
+<div id="start"><p class="title">Word Fun!</p><button id="go" aria-label="Play">▶️</button></div>
+<div id="top"><button class="btn" id="home" aria-label="Home">🏠</button><div id="stars">⭐ 0</div><button class="btn" id="fs" aria-label="Full screen">⛶</button></div>
+<div id="menu" class="screen on"><p class="title">Word Fun!</p>
+<button class="mode m1" data-m="pop" aria-label="Letter Pop">🎈</button>
+<button class="mode m2" data-m="build" aria-label="Build a Word">🐱</button>
+<button class="mode m3" data-m="find" aria-label="Find the Letter">🔍</button></div>
+<div id="pop" class="screen"><div id="bigl"></div></div>
+<div id="build" class="screen"><div id="pic"></div><div id="slots"></div><div id="tiles"></div></div>
+<div id="find" class="screen"><div id="ask"></div><div id="choices"></div></div>
+<div id="cheer"></div><canvas id="cf"></canvas>
+<script src="game.js"></script></body></html>
