@@ -24,7 +24,7 @@ body{background:linear-gradient(#7ec8ff,#bfe8ff 60%,#9be37a 60%,#6cc94f);color:#
 #pic{font-size:clamp(90px,22vh,170px);text-align:center;margin-top:2vh;cursor:pointer}
 #slots,#tiles{display:flex;justify-content:center;gap:14px;margin:2vh 0;flex-wrap:wrap}
 .slot,.tile{width:min(26vw,110px);height:min(26vw,110px);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:min(16vw,70px);font-weight:900}
-.slot{border:6px dashed #fff;background:#fff5;color:#fff}.slot.full{border-style:solid;background:#fff;color:#ff5fa2}
+#slots{flex-wrap:nowrap;gap:10px}#slots .slot{width:min(21vw,110px);height:min(21vw,110px)}.slot{border:6px dashed #fff;background:#fff5;color:#fff}.slot.full{border-style:solid;background:#fff;color:#ff5fa2}
 .tile{background:#fff;color:#3a7bd5;box-shadow:0 7px 0 #0003;cursor:grab;touch-action:none;position:relative;z-index:2}
 .tile.drag{z-index:50;transform:scale(1.15)}.tile.used{visibility:hidden}
 .tile.hint{animation:wig .6s 3}.tile.hint2{animation:wig .8s 1}.slot.ghost{color:#fff9}@keyframes wig{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
