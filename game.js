@@ -30,7 +30,7 @@ function star5(s){cx.beginPath();for(let i=0;i<10;i++){const r=i%2?s*.45:s,a=i*M
 function owlCheer(){document.querySelectorAll('.owl').forEach(o=>{o.classList.remove('cheer');void o.getBoundingClientRect();o.classList.add('cheer')})}
 // ---- navigation
 let mode='menu',timers=[];
-function show(m){mode=m;timers.forEach(clearInterval);timers=[];document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===m));document.body.dataset.m=m;if(m==='menu')shelf();if(m==='pop')startPop();if(m==='build')startBuild();if(m==='find')startFind()}
+function show(m){mode=m;timers.forEach(clearInterval);timers=[];document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===m));document.body.dataset.m=m;if(m==='menu')shelf();if(m==='pop')startPop();if(m==='build')startBuild();if(m==='find')startFind();if(window['start_'+m])window['start_'+m]()}
 document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{beep(500);say(b.getAttribute('aria-label'));show(b.dataset.m)});
 $('#home').onclick=()=>{beep(400);show('menu');say('Pick a game!')};
 $('#fs').onclick=()=>{const d=document,e=d.documentElement;if(d.fullscreenElement||d.webkitFullscreenElement){(d.exitFullscreen||d.webkitExitFullscreen).call(d)}else{(e.requestFullscreen||e.webkitRequestFullscreen||(()=>{})).call(e)}};
@@ -80,11 +80,9 @@ function startFind(){const pool=LET.split('').sort(()=>Math.random()-.5).slice(0
   b.onclick=()=>{if(L===target){b.classList.add('yay');{const r=b.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+r.height/2,18)}say(rnd(PRAISE)+' That\'s '+L+'! '+SND[L]);cheer();star();if(stars%5===0)confetti();setTimeout(()=>mode==='find'&&startFind(),2200)}
    else{b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);say('That\'s '+L+'. Find the '+target+'!')}};$('#choices').appendChild(b)});
  setTimeout(()=>say('Tap the '+target+'!'),300)}
-// ?mode=pop|build|find opens a game straight away (handy for links)
-{const m=new URLSearchParams(location.search).get('mode');if(['pop','build','find'].includes(m)){$('#start').remove();show(m)}}
 
 // ---- sticker shelf: a new sticker every 10 stars
 const STK=['🐶','🐱','🦄','🚀','🦖','🍦','🌈','🐙','🚒','🦁','🐸','🎈','🍩','🐼','🦋','⚽','🐳','🌟'];
-function shelf(){const got=Math.floor(stars/10),el=$('#shelf');el.innerHTML='';STK.slice(0,Math.max(6,Math.min(STK.length,got+3))).forEach((e,i)=>{const d=document.createElement('div');d.className='stk'+(i<got?' got':'');d.textContent=i<got?e:'?';if(i<got)d.onclick=()=>{d.classList.remove('yay');void d.offsetWidth;d.classList.add('yay');beep(700)};el.appendChild(d)});
+function shelf(){const got=Math.floor(stars/10),el=$('#shelf');el.innerHTML='';const off=Math.max(0,Math.min(got,STK.length)-5);STK.slice(off,off+6).forEach((e,j)=>{const i=j+off;const d=document.createElement('div');d.className='stk'+(i<got?' got':'');d.textContent=i<got?e:'?';if(i<got)d.onclick=()=>{d.classList.remove('yay');void d.offsetWidth;d.classList.add('yay');beep(700)};el.appendChild(d)});
  $('#nextbar').style.width=(stars%10)*10+'%'}
 shelf();
